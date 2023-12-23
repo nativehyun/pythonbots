@@ -92,20 +92,18 @@ for item in items:
     shortened_url = shorten_url(redirected_url)
 
     # 게시글을 보낼까요?
-    if shortened_url not in posts:
-        # Mastodon 에 공개범위 미등재로 게시할게요.
-        mastodon.status_post(f"{title}\n{shortened_url}", visibility='unlisted')
-        posts.append(shortened_url)
+if shortened_url not in posts:
+    # Mastodon 에 공개범위 미등재로 게시할게요.
+    mastodon.status_post(f"{title}\n{shortened_url}", visibility='unlisted')
+    posts.append(shortened_url)
 
-        # JSON 파일이 무한 증식하는 것을 방지하기 위해, 3000개 이상의 게시글을 기록하면 가장 오래된 게시글을 지울게요.
-        if len(posts) > 3000:
-            posts.pop(0)
+    # JSON 파일이 무한 증식하는 것을 방지하기 위해, 3000개 이상의 게시글을 기록하면 가장 오래된 게시글을 지울게요.
+    if len(posts) > 3000:
+        posts.pop(0)
 
-        with open(json_file, "w") as f:
-            json.dump(posts, f)
-
+    # 게시글 URL을 JSON 파일에 저장해요.
+    with open(json_file, "w") as f:
+        json.dump(posts, f)
+        
 # 끝났어요! 마지막으로 봇이 (거의) 실시간으로 정보를 마스토돈으로 보내기 위해 crontab 을 설정하는것을 잊지 말아주세요.
 # 제 부족한 코드를 봐주셔서 감사해요!
-
-# 알려진 문제
-# 봇의 중복처리 로직이 작동하지 않아요.
