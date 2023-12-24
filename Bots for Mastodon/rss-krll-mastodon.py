@@ -17,7 +17,7 @@ import json
 import lxml
 
 # 뉴스를 퍼오는 곳을 여기에 적어주세요. RSS 피드를 사용할 수 있어요.
-rss_url = "YOUR_RSS_URL_HERE"
+rss_url = "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRFZxYUdjU0FtdHZHZ0pMVWlnQVAB?hl=ko&gl=KR&ceid=KR%3Ako"
 
 # Mastodon 인스턴스에 로그인할게요.
 # mastodon_url 에 인스턴스 주소를 적어주세요! 예를들어, Pointless.chat 같이..
@@ -85,13 +85,17 @@ for item in items:
         response = session.get(link, allow_redirects=True)
         redirected_url = response.url
     except requests.exceptions.SSLError:
-        print("SSL 검증에 실패했어요.")
+        print("SSL 검증에 실패하였습니다.")
         redirected_url = link
 
     # 최종 목적지 URL을 단축해볼게요.
     shortened_url = shorten_url(redirected_url)
 
-    # 게시글을 보낼까요?
+# JSON 파일을 읽어서 게시글 URL 리스트를 가져옵니다.
+with open(json_file, "r") as f:
+    posts = json.load(f)
+
+# 새로운 게시글 URL이 리스트에 있는지 확인합니다.
 if shortened_url not in posts:
     # Mastodon 에 공개범위 미등재로 게시할게요.
     mastodon.status_post(f"{title}\n{shortened_url}", visibility='unlisted')
@@ -101,9 +105,9 @@ if shortened_url not in posts:
     if len(posts) > 3000:
         posts.pop(0)
 
-    # 게시글 URL을 JSON 파일에 저장해요.
+    # 게시글 URL을 JSON 파일에 저장합니다.
     with open(json_file, "w") as f:
         json.dump(posts, f)
-        
+
 # 끝났어요! 마지막으로 봇이 (거의) 실시간으로 정보를 마스토돈으로 보내기 위해 crontab 을 설정하는것을 잊지 말아주세요.
 # 제 부족한 코드를 봐주셔서 감사해요!
