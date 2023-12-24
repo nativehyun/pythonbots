@@ -36,7 +36,6 @@ shorten_url_api = "https://krll.me/api/urls"
 
 # 우리는 중복으로 툿을 날리는 것을 방지하기 위해 간단한 json 파일에 발송한 툿 내용을 기록할거에요.
 # 시스템의 json 파일 경로를 posts.json에 적어주세요!
-# 만약 json 파일이 없다면 오류를 뱉어낼 것이에요. 하지만 괜찮아요. nano 같은 에디터로 빈 json 파일을 만들어주세요.
 # 이걸 읽고 있으면 그정도는 할 수 있겠죠?
 json_file = "posts.json"
 
