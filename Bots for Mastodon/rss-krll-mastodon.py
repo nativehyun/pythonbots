@@ -88,11 +88,11 @@ for item in items:
     # 최종 목적지 URL을 단축해볼게요.
     shortened_url = shorten_url(redirected_url)
 
-# JSON 파일을 읽어서 게시글 URL 리스트를 가져옵니다.
+# JSON 파일을 읽어서 게시글 URL 리스트를 가져올게요.
 with open(json_file, "r") as f:
     posts = json.load(f)
 
-# 새로운 게시글 URL이 리스트에 있는지 확인합니다.
+# 새로운 게시글 URL이 리스트에 있는지 확인할게요.
 if shortened_url not in posts:
     # Mastodon 에 공개범위 미등재로 게시할게요.
     mastodon.status_post(f"{title}\n{shortened_url}", visibility='unlisted')
