@@ -5,9 +5,7 @@
 # 라이선스에 대한 자세한 정보는 다음 링크에서 찾아보실 수 있어요.
 # https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-# 그럼, 즐거운 삐삐쀼쀼 시간을 가져볼까요?
 # 이 코드는 RSS 피드를 가져와서 Mastodon 인스턴스에 게시해요.
-
 # 시작해봅시다! 먼저 필요한 라이브러리를 가져올게요. 슝~
 import requests
 from bs4 import BeautifulSoup
